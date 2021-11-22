@@ -7,28 +7,24 @@ Done by:
 * Venkatesh Vayachal
 '''
 
-from image import Image
 from color import Color
+from vector import Vector
+from point import Point
+from sphere import Sphere
+from scene import Scene
+from renderer import Renderer
 
 def main():
-	# Defining the image
-	width = 3
-	height = 2
-	img = Image(width,height)
+	# Setting up the scene and the renderer
+	width = 320
+	height = 200
+	camera = Vector(0,0,-1)
+	objects = [Sphere(Point(0,0,0),0.5,Color.toRGB("#FF0000"))]
+	scene = Scene(camera,objects,width,height)
+	renderer = Renderer()
 
-	# Defining the color
-	red = Color(x = 1,y = 0,z = 0)
-	green = Color(x = 0,y = 1,z = 0)
-	blue = Color(x = 0,y = 0,z = 1)
-
-	# Setting the colors to the image
-	img.set_pixel(0,0,red)
-	img.set_pixel(1,0,green)
-	img.set_pixel(2,0,blue)
-
-	img.set_pixel(0,1,red + green)
-	img.set_pixel(1,1,red + blue + green)
-	img.set_pixel(2,1,red.multiply_scalar(0.001))
+	# Defining the image that has been rendered
+	img = renderer.render(scene)
 
 	with open("test.ppm","w") as img_file:
 		img.write_ppm(img_file)
