@@ -1,9 +1,10 @@
 '''
 A raytracer based on the Turner-Whitted paper
-Done by: Souporno S Ghosh
-		 Varun Peesapati
-		 Rishi Prakaash Srinivasan Mohan
-		 Venkatesh Vayachal
+Done by: 
+* Souporno S Ghosh
+* Varun Peesapati
+* Rishi Prakaash Srinivasan Mohan
+* Venkatesh Vayachal
 '''
 
 from image import Image
