@@ -13,14 +13,17 @@ from point import Point
 from sphere import Sphere
 from scene import Scene
 from renderer import Renderer
+from light import Light
+from material import Material
 
 def main():
 	# Setting up the scene and the renderer
 	width = 320
 	height = 200
 	camera = Vector(0,0,-1)
-	objects = [Sphere(Point(0,0,0),0.5,Color.toRGB("#FF0000"))]
-	scene = Scene(camera,objects,width,height)
+	objects = [Sphere(Point(0,0,0),0.5,Material(Color.toRGB("#FF0000")))]
+	lights = [Light(Point(1.5,-0.5,-10.0),Color.toRGB("#FFFFFF"))]
+	scene = Scene(camera,objects,lights,width,height)
 	renderer = Renderer()
 
 	# Defining the image that has been rendered
