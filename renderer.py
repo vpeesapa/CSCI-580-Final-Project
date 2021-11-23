@@ -48,7 +48,8 @@ class Renderer:
 			return color
 
 		hit_pos = ray.origin + ray.direction.multiply_scalar(distance_hit)
-		color += self.get_color(object_hit,hit_pos,scene)
+		normal_hit = object_hit.normal(hit_pos)
+		color += self.get_color(object_hit,hit_pos,normal_hit,scene)
 
 		return color
 
@@ -68,5 +69,22 @@ class Renderer:
 		return min_distance,object_hit
 
 	# Function that calculates the color at a certain pixel
-	def get_color(self,object_hit,hit_pos,scene):
-		return object_hit.color
+	def get_color(self,object_hit,hit_pos,normal,scene):
+		material = object_hit.material
+		object_color = material.get_color()
+		to_camera = scene.camera - hit_pos
+		specular_k = 50
+		color = Color.toRGB("#000000").multiply_scalar(material.Ka)
+
+		# Calculate the shading
+		for light in scene.lights:
+			to_light = Ray(hit_pos,light.position - hit_pos)
+
+			# Diffuse shading
+			color += object_color.multiply_scalar(material.Kd * max(normal.dot_product(to_light.direction),0))
+
+			# Specular shading using the Blinn-Phong model
+			half_vector = (to_light.direction + to_camera).normalize()
+			color += light.color.multiply_scalar(material.Ks * (max(normal.dot_product(half_vector),0) ** specular_k))
+
+		return color
