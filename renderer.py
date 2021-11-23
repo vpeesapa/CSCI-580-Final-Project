@@ -73,7 +73,7 @@ class Renderer:
 		material = object_hit.material
 		object_color = material.get_color()
 		to_camera = scene.camera - hit_pos
-		specular_k = 50
+		specular_k = 64
 		color = Color.toRGB("#000000").multiply_scalar(material.Ka)
 
 		# Calculate the shading
