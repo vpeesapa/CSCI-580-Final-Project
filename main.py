@@ -6,6 +6,7 @@ Done by:
 * Rishi Prakaash Srinivasan Mohan
 * Venkatesh Vayachal
 '''
+import sys
 
 from color import Color
 from vector import Vector
@@ -17,6 +18,13 @@ from light import Light
 from material import Material
 
 def main():
+	# Checking if the file name is passed as an argument
+	if len(sys.argv) != 2:
+		print("Correct usage: py main.py <filename>.ppm")
+		sys.exit(1)
+
+	output_file = sys.argv[1]
+
 	# Setting up the scene and the renderer
 	width = 320
 	height = 200
@@ -29,7 +37,7 @@ def main():
 	# Defining the image that has been rendered
 	img = renderer.render(scene)
 
-	with open("test.ppm","w") as img_file:
+	with open(output_file,"w") as img_file:
 		img.write_ppm(img_file)
 
 if __name__ == "__main__":
