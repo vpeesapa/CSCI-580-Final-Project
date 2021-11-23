@@ -4,10 +4,10 @@ import math
 class Sphere:
 
 	# Parametrised constructor to initialize the sphere
-	def __init__(self,center,radius,color):
+	def __init__(self,center,radius,material):
 		self.center = center
 		self.radius = radius
-		self.color = color
+		self.material = material
 
 	# Function that checks if a ray intersects with the sphere
 	def intersects(self,ray):
@@ -27,3 +27,7 @@ class Sphere:
 				return distance
 
 		return None
+
+	# Function that returns the normal at a point on the surface
+	def normal(self,surface_point):
+		return (surface_point - self.center).normalize()
