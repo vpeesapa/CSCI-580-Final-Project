@@ -12,17 +12,19 @@ Professor Ulrich Neumann
 
 ## Usage
 On Windows:
-
-`py main.py Setup.plain_image`
+```
+py main.py Setup.plain_image
+```
 
 On Linux/Mac:
-
-`python3 main.py Setup.plain_image`
+```
+python3 main.py Setup.plain_image
+```
 
 For faster runtime:
-
-`pypy main.py Setup.plain_image`
-
+```
+pypy main.py Setup.plain_image
+```
 **Note**: PyPy installation link and setup guide (for Windows) are included under the [References](#References) section.
 
 ## References
