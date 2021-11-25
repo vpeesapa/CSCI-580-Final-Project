@@ -6,6 +6,11 @@ from color import Color
 # Class that provides a definition for the renderer
 class Renderer:
 
+	# Default constructor that initialized the maximum depth of the ray tracer
+	def __init__(self):
+		self.max_depth = 5
+		self.min_displacement = 0.0001
+
 	# Function that renders the image
 	def render(self,scene):
 		width = scene.width
@@ -37,7 +42,7 @@ class Renderer:
 		return pixels
 
 	# Function that traces the ray from the image to the eye
-	def ray_trace(self,ray,scene):
+	def ray_trace(self,ray,scene,depth = 0):
 		color = Color(0,0,0)
 
 		# Finding the nearest object hit by the ray in the scene
@@ -50,6 +55,15 @@ class Renderer:
 		hit_pos = ray.origin + ray.direction.multiply_scalar(distance_hit)
 		normal_hit = object_hit.normal(hit_pos)
 		color += self.get_color(object_hit,hit_pos,normal_hit,scene)
+
+		if depth < self.max_depth:
+			# Getting the ray that has been reflected off of the sphere's surface
+			new_ray_pos = hit_pos + normal_hit.multiply_scalar(self.min_displacement)
+			new_ray_direction = ray.direction - normal_hit.multiply_scalar(2 * ray.direction.dot_product(normal_hit))
+			new_ray = Ray(new_ray_pos,new_ray_direction)
+
+			# Attenuate the reflected ray by the reflection coefficient
+			color += self.ray_trace(new_ray,scene,depth + 1).multiply_scalar(object_hit.material.reflection)
 
 		return color
 
@@ -71,7 +85,7 @@ class Renderer:
 	# Function that calculates the color at a certain pixel
 	def get_color(self,object_hit,hit_pos,normal,scene):
 		material = object_hit.material
-		object_color = material.get_color()
+		object_color = material.get_color(hit_pos)
 		to_camera = scene.camera - hit_pos
 		specular_k = 64
 		color = Color.toRGB("#000000").multiply_scalar(material.Ka)
