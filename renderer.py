@@ -8,6 +8,7 @@ class Renderer:
 
 	# Default constructor that initialized the maximum depth of the ray tracer
 	def __init__(self):
+		# Rays are traced upto a maximum of 5 times
 		self.max_depth = 5
 		self.min_displacement = 0.0001
 
@@ -41,7 +42,7 @@ class Renderer:
 
 		return pixels
 
-	# Function that traces the ray from the image to the eye
+	# Function that traces the ray from the eye to the light
 	def ray_trace(self,ray,scene,depth = 0):
 		color = Color(0,0,0)
 
@@ -97,7 +98,7 @@ class Renderer:
 			# Diffuse shading
 			color += object_color.multiply_scalar(material.Kd * max(normal.dot_product(to_light.direction),0))
 
-			# Specular shading using the Blinn-Phong model
+			# Specular shading using the Blinn-Phong model (not Turner-Whitted's)
 			half_vector = (to_light.direction + to_camera).normalize()
 			color += light.color.multiply_scalar(material.Ks * (max(normal.dot_product(half_vector),0) ** specular_k))
 
