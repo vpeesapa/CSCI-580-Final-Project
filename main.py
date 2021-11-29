@@ -10,6 +10,7 @@ import sys
 import importlib
 import os
 
+from datetime import datetime
 from scene import Scene
 from renderer import Renderer
 
@@ -22,6 +23,12 @@ def main():
 	path_to_setup = sys.argv[1]
 	mod = importlib.import_module(path_to_setup)
 
+	# Creating a time stamp to test the speed of our program
+	current_time = datetime.now()
+	current_time = current_time.strftime("%H:%M:%S")
+
+	print("Start time:",current_time)
+
 	# Rendering the scene
 	scene = Scene(mod.camera,mod.objects,mod.lights,mod.width,mod.height)
 	renderer = Renderer()
@@ -30,6 +37,11 @@ def main():
 	os.chdir(os.path.dirname(os.path.abspath(mod.__file__)))
 	with open(mod.rendered_image,"w") as img_file:
 		image.write_ppm(img_file)
+
+	current_time = datetime.now()
+	current_time = current_time.strftime("%H:%M:%S")
+
+	print("End time:",current_time)
 
 if __name__ == "__main__":
 	main()
