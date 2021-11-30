@@ -19,6 +19,6 @@ objects = [
 	Sphere(Point(-0.75,-0.1,2.25),0.6,Material(Color.toRGB("#803980")))
 ]
 lights = [
-	Light(Point(1.5,-0.5,-10),Color.toRGB("#FFFFFF")),
+	Light(Point(1.5,-10.5,-10),Color.toRGB("#FFFFFF")),
 	Light(Point(-0.5,-10.5,0),Color.toRGB("#E6E6E6"))
 ]

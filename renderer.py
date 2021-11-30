@@ -95,6 +95,10 @@ class Renderer:
 		for light in scene.lights:
 			to_light = Ray(hit_pos,light.position - hit_pos)
 
+			min_distance,_ = self.find_nearest(to_light,scene)
+			if min_distance is not None and min_distance < (light.position - hit_pos).magnitude():
+				return color
+
 			# Diffuse shading
 			color += object_color.multiply_scalar(material.Kd * max(normal.dot_product(to_light.direction),0))
 
